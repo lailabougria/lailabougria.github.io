@@ -12,7 +12,7 @@ draft: false
 order: 7
 deliveries: []
 sessionizeUrl: "https://sessionize.com/s/noctovis/message-processing-failed-but-whats-the-root-cause/51975"
-photo: "../../assets/talk-banners/message-processing-failed.jpg"
+photo: "message-processing-failed.jpg"
 githubUrl: "https://github.com/lailabougria/talks/tree/main/message-processing-failed-but-whats-the-root-cause"
 ---
 

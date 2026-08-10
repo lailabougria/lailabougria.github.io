@@ -4,6 +4,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import YouTubeEmbed from '../../components/YouTubeEmbed.astro';
 import { getCollection, render } from 'astro:content';
 import { formatDate } from '../../lib/schedule';
+import { resolvePhoto } from '../../lib/images';
 
 export async function getStaticPaths() {
 	const keynotes = await getCollection('keynotes', ({ data }) => !data.draft);
@@ -14,7 +15,8 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { title, tagline, description, deliveries, photo, photoCaption } = entry.data;
+const { title, tagline, description, deliveries, photo: photoFilename, photoCaption } = entry.data;
+const photo = photoFilename ? resolvePhoto(photoFilename) : undefined;
 const { Content } = await render(entry);
 
 const sortedDeliveries = [...deliveries].sort((a, b) => b.date.valueOf() - a.date.valueOf());

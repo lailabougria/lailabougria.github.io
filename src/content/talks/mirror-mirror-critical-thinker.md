@@ -10,7 +10,7 @@ draft: false
 order: 4
 deliveries: []
 sessionizeUrl: "https://sessionize.com/s/noctovis/mirror-mirror-on-the-wall.-am-i-a-critical-thinker/65285"
-photo: "../../assets/talk-banners/mirror-mirror-critical-thinker.jpg"
+photo: "mirror-mirror-critical-thinker.jpg"
 githubUrl: "https://github.com/lailabougria/talks/tree/main/mirror-on-the-wall-am-i-a-critical-thinker"
 ---
 

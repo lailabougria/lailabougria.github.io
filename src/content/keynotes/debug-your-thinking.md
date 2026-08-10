@@ -14,7 +14,7 @@ deliveries:
     date: 2024-01-31
     eventUrl: "https://ndclondon.com/"
 sessionizeUrl: "https://sessionize.com/s/noctovis/keynote-debug-your-thinking/127495"
-photo: "../../assets/photos/ndc-london-2024.jpg"
+photo: "ndc-london-2024.jpg"
 photoCaption: "On stage at NDC London, 2024"
 ---
 

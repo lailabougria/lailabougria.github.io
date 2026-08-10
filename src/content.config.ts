@@ -36,39 +36,39 @@ const workshopDelivery = z.object({
 
 const keynotes = defineCollection({
 	loader: glob({ pattern: '**/*.md', base: './src/content/keynotes' }),
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			tagline: z.string(),
-			description: z.string(),
-			topics: z.array(z.string()).default([]),
-			draft: z.boolean().default(false),
-			deliveries: z.array(delivery).default([]),
-			sessionizeUrl: z.string().url().optional(),
-			// Optional photo shown on the keynote's page, e.g. from a past delivery.
-			photo: image().optional(),
-			photoCaption: z.string().optional(),
-		}),
+	schema: z.object({
+		title: z.string(),
+		tagline: z.string(),
+		description: z.string(),
+		topics: z.array(z.string()).default([]),
+		draft: z.boolean().default(false),
+		deliveries: z.array(delivery).default([]),
+		sessionizeUrl: z.string().url().optional(),
+		// Filename of a photo in src/assets/photos/ (not a resolved image import —
+		// see src/lib/images.ts for why: it avoids Astro double-shipping an
+		// unoptimized copy of the original alongside the optimized one).
+		photo: z.string().optional(),
+		photoCaption: z.string().optional(),
+	}),
 });
 
 const talks = defineCollection({
 	loader: glob({ pattern: '**/*.md', base: './src/content/talks' }),
-	schema: ({ image }) =>
-		z.object({
-			title: z.string(),
-			categories: z.array(talkCategory).min(1),
-			description: z.string(),
-			topics: z.array(z.string()).default([]),
-			draft: z.boolean().default(false),
-			deliveries: z.array(delivery).default([]),
-			sessionizeUrl: z.string().url().optional(),
-			// Banner image pulled from this talk's folder in the lailabougria/talks GitHub repo.
-			photo: image().optional(),
-			// Link to that talk's folder (slides, resources, samples) in the same repo.
-			githubUrl: z.string().url().optional(),
-			// Manual display order (most recent/relevant first) for /talks/ and the home page.
-			order: z.number().optional(),
-		}),
+	schema: z.object({
+		title: z.string(),
+		categories: z.array(talkCategory).min(1),
+		description: z.string(),
+		topics: z.array(z.string()).default([]),
+		draft: z.boolean().default(false),
+		deliveries: z.array(delivery).default([]),
+		sessionizeUrl: z.string().url().optional(),
+		// Filename of a banner in src/assets/talk-banners/ (see note on keynotes.photo above).
+		photo: z.string().optional(),
+		// Link to that talk's folder (slides, resources, samples) in the same repo.
+		githubUrl: z.string().url().optional(),
+		// Manual display order (most recent/relevant first) for /talks/ and the home page.
+		order: z.number().optional(),
+	}),
 });
 
 const workshops = defineCollection({

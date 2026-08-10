@@ -19,7 +19,7 @@ deliveries:
     date: 2025-12-11
     eventUrl: "https://www.cloudbrew.be/"
 sessionizeUrl: "https://sessionize.com/s/noctovis/keynote-ctrlshiftbuildpause/127501"
-photo: "../../assets/photos/ndc-oslo-2025.jpg"
+photo: "ndc-oslo-2025.jpg"
 photoCaption: "On stage at NDC Oslo, 2025"
 ---
 

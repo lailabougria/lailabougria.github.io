@@ -11,7 +11,7 @@ draft: false
 order: 6
 deliveries: []
 sessionizeUrl: "https://sessionize.com/s/noctovis/messaging-the-fine-line-between-awesome-and-awful-/61257"
-photo: "../../assets/talk-banners/messaging-fine-line.jpg"
+photo: "messaging-fine-line.jpg"
 githubUrl: "https://github.com/lailabougria/talks/tree/main/messaging-fine-line-between-awesome-and-awful"
 ---
 

@@ -12,7 +12,7 @@ draft: false
 order: 3
 deliveries: []
 sessionizeUrl: "https://sessionize.com/s/noctovis/orchestration-vs.-choreography-the-good-the-bad-an/85806"
-photo: "../../assets/talk-banners/orchestration-vs-choreography.png"
+photo: "orchestration-vs-choreography.png"
 githubUrl: "https://github.com/lailabougria/talks/tree/main/orchestration-vs-choreography"
 ---
 

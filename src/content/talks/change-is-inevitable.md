@@ -17,7 +17,7 @@ deliveries:
     date: 2026-09-14
     eventUrl: "https://ndcoslo.com/"
 sessionizeUrl: "https://sessionize.com/s/noctovis/change-is-inevitable-versioning-event-driven-syste/123426"
-photo: "../../assets/talk-banners/change-is-inevitable.jpg"
+photo: "change-is-inevitable.jpg"
 githubUrl: "https://github.com/lailabougria/talks/tree/main/change-is-inevitable-versioning-eds"
 ---
 

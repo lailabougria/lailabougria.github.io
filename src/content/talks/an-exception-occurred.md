@@ -12,7 +12,7 @@ draft: false
 order: 8
 deliveries: []
 sessionizeUrl: "https://sessionize.com/s/noctovis/an-exception-occurred.-please-try-again/51974"
-photo: "../../assets/talk-banners/an-exception-occurred.jpg"
+photo: "an-exception-occurred.jpg"
 githubUrl: "https://github.com/lailabougria/talks/tree/main/an-exception-occurred-please-try-again"
 ---
 

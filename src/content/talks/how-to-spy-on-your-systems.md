@@ -11,7 +11,7 @@ draft: false
 order: 5
 deliveries: []
 sessionizeUrl: "https://sessionize.com/s/noctovis/how-to-effectively-spy-on-your-systems/61258"
-photo: "../../assets/talk-banners/how-to-spy-on-your-systems.jpg"
+photo: "how-to-spy-on-your-systems.jpg"
 githubUrl: "https://github.com/lailabougria/talks/tree/main/how-to-effectively-spy-on-your-systems"
 ---
 
