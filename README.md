@@ -72,7 +72,3 @@ Talks and workshops both support an optional `githubUrl` pointing at that talk/w
 ### Publishing / unpublishing
 
 Set `draft: true` on any keynote, talk, or workshop to hide it from the site without deleting the file.
-
-## TODO before this goes live
-
-- [ ] Replace `YOUR_FORM_ID` in `src/pages/contact/index.astro` with a real [Formspree](https://formspree.io) form ID so the contact form actually delivers messages.
