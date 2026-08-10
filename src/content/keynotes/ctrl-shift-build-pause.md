@@ -7,8 +7,20 @@ topics:
   - Software architecture
   - Critical thinking
 draft: false
-deliveries: []
+deliveries:
+  - event: "NDC Oslo"
+    location: "Oslo, Norway"
+    countryCode: "no"
+    date: 2025-05-21
+    eventUrl: "https://ndcoslo.com/"
+  - event: "CloudBrew"
+    location: "Mechelen, Belgium"
+    countryCode: "be"
+    date: 2025-12-11
+    eventUrl: "https://www.cloudbrew.be/"
 sessionizeUrl: "https://sessionize.com/s/noctovis/keynote-ctrlshiftbuildpause/127501"
+photo: "../../assets/photos/ndc-oslo-2025.jpg"
+photoCaption: "On stage at NDC Oslo, 2025"
 ---
 
 Copilots are everywhere these days, and… rightfully so! Let's face it: these tools are incredible at getting things done. They have the potential to turn any one of us into a 20x developer. Need a new feature? Bam, there you have it! Refactor that function? Sure, it'll be done before you grind the coffee for your next cup. These tools do a very good job of generating well-designed, tested, and performant code. Before you know it, you're not just building a feature—you're building 17 slightly different features simultaneously because why not? After all, the code writes itself!

@@ -4,6 +4,18 @@ import { getCollection } from 'astro:content';
 import { talkCategories } from '../../content.config';
 
 const talks = await getCollection('talks', ({ data }) => !data.draft);
+const sortedTalks = [...talks].sort((a, b) => (a.data.order ?? 999) - (b.data.order ?? 999));
+
+// Only show categories that at least one talk actually uses — otherwise the filter leads to an empty page.
+const usedCategories = talkCategories.filter((category) =>
+	talks.some((t) => t.data.categories.includes(category)),
+);
+
+const categoryTooltips: Partial<Record<(typeof talkCategories)[number], string>> = {
+	EDA: 'Event-driven architecture',
+	O11Y: 'Observability',
+	Patterns: 'Software patterns',
+};
 ---
 
 <BaseLayout
@@ -18,10 +30,17 @@ const talks = await getCollection('talks', ({ data }) => !data.draft);
 				them, alongside talks on critical thinking and starting a career in software.
 			</p>
 			<div class="filters" role="group" aria-label="Filter talks by category">
-				<button type="button" class="filter-btn is-active" data-filter="all">All</button>
+				<button type="button" class="filter-btn is-active" data-filter="all" title="All">
+					All
+				</button>
 				{
-					talkCategories.map((category) => (
-						<button type="button" class="filter-btn" data-filter={category}>
+					usedCategories.map((category) => (
+						<button
+							type="button"
+							class="filter-btn"
+							data-filter={category}
+							title={categoryTooltips[category] ?? category}
+						>
 							{category}
 						</button>
 					))
@@ -32,7 +51,7 @@ const talks = await getCollection('talks', ({ data }) => !data.draft);
 		<section class="section" style="border-top: none;">
 			<div class="talk-list" id="talk-list">
 				{
-					talks.map((entry) => (
+					sortedTalks.map((entry) => (
 						<a
 							class="talk-row"
 							href={`/talks/${entry.id}/`}

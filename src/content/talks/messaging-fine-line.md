@@ -8,8 +8,11 @@ topics:
   - Messaging
   - Distributed systems
 draft: false
+order: 6
 deliveries: []
 sessionizeUrl: "https://sessionize.com/s/noctovis/messaging-the-fine-line-between-awesome-and-awful-/61257"
+photo: "../../assets/talk-banners/messaging-fine-line.jpg"
+githubUrl: "https://github.com/lailabougria/talks/tree/main/messaging-fine-line-between-awesome-and-awful"
 ---
 
 Distributed systems are becoming increasingly common in today's systems landscape, and messaging is often used to coordinate between components in these systems safely. With benefits like increased reliability, better performance, easy scalability, and easier decoupling of components, you might quickly think, "Shut up and take my money!". However, as with any architectural choice, the other side of the coin surfaces challenges and pitfalls that we must consider: structuring code to fully leverage messaging, dealing with duplicate messages, ordering issues, and diagnosing problems.

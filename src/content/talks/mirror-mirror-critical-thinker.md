@@ -7,8 +7,11 @@ topics:
   - Critical thinking
   - Decision-making
 draft: false
+order: 4
 deliveries: []
 sessionizeUrl: "https://sessionize.com/s/noctovis/mirror-mirror-on-the-wall.-am-i-a-critical-thinker/65285"
+photo: "../../assets/talk-banners/mirror-mirror-critical-thinker.jpg"
+githubUrl: "https://github.com/lailabougria/talks/tree/main/mirror-on-the-wall-am-i-a-critical-thinker"
 ---
 
 How many times have you looked back at a project only to find a mix of technologies, architectural styles, patterns, and practices that somehow just don't fit together, only to conclude: This is unmaintainable... Let's rewrite the whole thing! As tech professionals, we usually pride ourselves in our ability to think critically because, as part of our work, we continuously tackle complex problems. But are we really critical thinkers? If so, which decisions led to this point? Were they made consciously? What decision framework was used to structure our thoughts and avoid biases?

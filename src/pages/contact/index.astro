@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { linkedin, socials } from '../../data/social';
+import headshot from '../../assets/photos/headshot.jpg';
 
 // TODO: sign up at https://formspree.io, create a form, and replace
 // YOUR_FORM_ID below with the ID from your form's endpoint URL.
@@ -13,12 +15,15 @@ const FORMSPREE_ID = 'YOUR_FORM_ID';
 >
 	<main class="wrap">
 		<section class="page-hero">
-			<h1>Let's talk about your event</h1>
-			<p class="lede">
-				Booking a keynote, inviting me for a conference talk, or just want a quote? Tell me
-				about your event below, or reach out directly on
-				<a class="inline-link" href={linkedin.url} target="_blank" rel="noopener">LinkedIn</a>.
-			</p>
+			<div class="page-hero-text">
+				<h1>Hi, I'm Laila<br />Let's talk about your event</h1>
+				<p class="lede">
+					Booking a keynote, inviting me for a conference talk, or just want a quote? Tell me
+					about your event below, or reach out directly on{' '}
+					<a class="inline-link" href={linkedin.url} target="_blank" rel="noopener">LinkedIn</a>.
+				</p>
+			</div>
+			<Image class="headshot" src={headshot} alt="Laila Bougria" width={480} height={480} />
 		</section>
 
 		<section class="section" style="border-top: none;">
@@ -44,9 +49,10 @@ const FORMSPREE_ID = 'YOUR_FORM_ID';
 				<div class="form-field">
 					<label for="engagement">What are you looking for?</label>
 					<select id="engagement" name="engagement">
-						<option value="keynote">A keynote</option>
+						<option value="quote-existing-keynote">A quote for an existing keynote</option>
+						<option value="quote-new-keynote">A quote for a new keynote</option>
 						<option value="talk">A conference talk</option>
-						<option value="quote">A quote / more information</option>
+						<option value="workshop">A workshop</option>
 						<option value="other">Something else</option>
 					</select>
 				</div>
@@ -65,27 +71,20 @@ const FORMSPREE_ID = 'YOUR_FORM_ID';
 			</form>
 		</section>
 
-		<section class="section" style="border-bottom: none;">
-			<div class="section-head">
-				<h2>Elsewhere</h2>
-			</div>
-			<div class="social-list">
-				<a href={linkedin.url} target="_blank" rel="noopener">LinkedIn — /in/lailabougria</a>
-				{
-					socials.map((s) => (
-						<a href={s.url} target="_blank" rel="noopener">
-							{s.name}
-						</a>
-					))
-				}
-			</div>
-		</section>
 	</main>
 </BaseLayout>
 
 <style>
 	.page-hero {
 		padding: 76px 0 30px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 48px;
+	}
+	.page-hero-text {
+		flex: 1;
+		min-width: 0;
 	}
 	h1 {
 		font-family: var(--serif);
@@ -104,6 +103,15 @@ const FORMSPREE_ID = 'YOUR_FORM_ID';
 		font-weight: 600;
 	}
 
+	.page-hero :global(.headshot) {
+		width: 280px;
+		height: 280px;
+		object-fit: cover;
+		border-radius: 3px;
+		border: 1px solid var(--line);
+		flex-shrink: 0;
+	}
+
 	.contact-form {
 		display: flex;
 		flex-direction: column;
@@ -114,17 +122,15 @@ const FORMSPREE_ID = 'YOUR_FORM_ID';
 		align-self: flex-start;
 	}
 
-	.social-list {
-		display: flex;
-		flex-direction: column;
-		gap: 12px;
-		font-size: 15px;
-	}
-	.social-list a {
-		text-decoration: none;
-		color: var(--muted);
-	}
-	.social-list a:hover {
-		color: var(--ink);
+	@media (max-width: 700px) {
+		.page-hero {
+			flex-direction: column-reverse;
+			align-items: flex-start;
+			gap: 24px;
+		}
+		.page-hero :global(.headshot) {
+			width: 180px;
+			height: 180px;
+		}
 	}
 </style>

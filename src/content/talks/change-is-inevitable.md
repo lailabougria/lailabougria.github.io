@@ -9,6 +9,7 @@ topics:
   - Versioning
   - Messaging
 draft: false
+order: 2
 deliveries:
   - event: "NDC Oslo"
     location: "Oslo, Norway"
@@ -16,6 +17,8 @@ deliveries:
     date: 2026-09-14
     eventUrl: "https://ndcoslo.com/"
 sessionizeUrl: "https://sessionize.com/s/noctovis/change-is-inevitable-versioning-event-driven-syste/123426"
+photo: "../../assets/talk-banners/change-is-inevitable.jpg"
+githubUrl: "https://github.com/lailabougria/talks/tree/main/change-is-inevitable-versioning-eds"
 ---
 
 Building an event-driven system is anything but trivial. However, once you make it past the sea of pub-sub vs. command-response debates and the service boundaries conundrum, you'll soon face the inevitable: change. The conversations that follow sound all too familiar... "Who's subscribed to this message?" "Do other services depend on this field in the payload?" "Why on earth is that thing in the payload?" "That service should never rely on this data!" And, of course, the obvious "Can't we -just- remove this?"

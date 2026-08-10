@@ -9,6 +9,7 @@ topics:
   - Azure Service Bus
   - Messaging
 draft: false
+order: 1
 deliveries:
   - event: "Building Bruges"
     location: "Bruges, Belgium"
@@ -26,6 +27,7 @@ deliveries:
     date: 2026-12-10
     eventUrl: "https://www.cloudbrew.be/"
 sessionizeUrl: "https://sessionize.com/s/noctovis/split-happens-designing-and-evolving-your-messagin/173915"
+githubUrl: "https://github.com/lailabougria/talks/tree/main/split-happens-eda-topology"
 ---
 
 Designing an event-driven architecture is more than thinking about services and message flows. All those decisions need to be implemented in the topology of the system: the queues, topics, subscriptions, and routing rules that make up our running system. Making these decisions isn't trivial... How many message types comfortably fit onto a single queue? Should you have a topic per event type, or is mixing several event types a better approach? And what about filtering and routing? These are the questions you'll wrestle with from day one… And every day after.

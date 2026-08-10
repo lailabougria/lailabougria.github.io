@@ -1,23 +1,47 @@
 ---
-import LinkedInIcon from './LinkedInIcon.astro';
+import LinkedInIcon from './icons/LinkedInIcon.astro';
+import XIcon from './icons/XIcon.astro';
+import MastodonIcon from './icons/MastodonIcon.astro';
+import BlueskyIcon from './icons/BlueskyIcon.astro';
+import YouTubeIcon from './icons/YouTubeIcon.astro';
 import { linkedin, socials } from '../data/social';
 
 const year = new Date().getFullYear();
+
+const icons: Record<string, typeof LinkedInIcon> = {
+	LinkedIn: LinkedInIcon,
+	X: XIcon,
+	Mastodon: MastodonIcon,
+	Bluesky: BlueskyIcon,
+	YouTube: YouTubeIcon,
+};
+
+const links = [linkedin, ...socials];
 ---
 
 <footer class="site-footer">
 	<div class="wrap">
 		<div class="footer-grid">
-			<div class="social-list">
-				<a href={linkedin.url} target="_blank" rel="noopener">LinkedIn — /in/lailabougria</a>
+			<nav class="social-row" aria-label="Social media">
 				{
-					socials.map((s) => (
-						<a href={s.url} target="_blank" rel="noopener">
-							{s.name}
-						</a>
-					))
+					links.map((link, i) => {
+						const Icon = icons[link.name];
+						return (
+							<>
+								<a href={link.url} target="_blank" rel="noopener">
+									{Icon && <Icon />}
+									{link.name}
+								</a>
+								{i < links.length - 1 && (
+									<span class="sep" aria-hidden="true">
+										|
+									</span>
+								)}
+							</>
+						);
+					})
 				}
-			</div>
+			</nav>
 			<a class="li-btn" href={linkedin.url} target="_blank" rel="noopener">
 				<LinkedInIcon />
 				Connect on LinkedIn

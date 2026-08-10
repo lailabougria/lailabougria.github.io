@@ -11,10 +11,9 @@ export const linkedin: SocialLink = {
 };
 
 export const socials: SocialLink[] = [
+	{ name: 'Bluesky', url: 'https://bsky.app/profile/noctovis.bsky.social' },
+	{ name: 'YouTube', url: 'https://www.youtube.com/@laila.bougria' },
 	{ name: 'Sessionize', url: 'https://sessionize.com/noctovis' },
 	{ name: 'X', url: 'https://twitter.com/noctovis' },
 	{ name: 'Mastodon', url: 'https://hachyderm.io/@noctovis' },
-	// TODO: replace with your real Bluesky profile URL once you have one.
-	{ name: 'Bluesky', url: 'https://bsky.app/' },
-	{ name: 'YouTube', url: 'https://www.youtube.com/@laila.bougria' },
 ];

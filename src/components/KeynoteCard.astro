@@ -7,7 +7,8 @@ interface Props {
 const { entry } = Astro.props;
 const { title, tagline, deliveries } = entry.data;
 
-const mostRecent = [...deliveries].sort((a, b) => b.date.valueOf() - a.date.valueOf())[0];
+// Show where this keynote premiered, not the most recent booking.
+const firstDelivery = [...deliveries].sort((a, b) => a.date.valueOf() - b.date.valueOf())[0];
 ---
 
 <a class="card" href={`/keynotes/${entry.id}/`}>
@@ -16,14 +17,14 @@ const mostRecent = [...deliveries].sort((a, b) => b.date.valueOf() - a.date.valu
 	<p>{tagline}</p>
 	<div class="meta">
 		{
-			mostRecent ? (
+			firstDelivery ? (
 				<>
 					<span>
-						Venue: <b>{mostRecent.event}, {mostRecent.location}</b>
+						Conference: <b>{firstDelivery.event}, {firstDelivery.location}</b>
 					</span>
-					{mostRecent.attendees && (
+					{firstDelivery.attendees && (
 						<span>
-							Attendees: <b>{mostRecent.attendees}+</b>
+							Attendees: <b>{firstDelivery.attendees}+</b>
 						</span>
 					)}
 				</>

@@ -1,6 +1,5 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import HandDrawnAccent from '../../components/HandDrawnAccent.astro';
 import KeynoteCard from '../../components/KeynoteCard.astro';
 import { getCollection } from 'astro:content';
 
@@ -13,9 +12,6 @@ const keynotes = await getCollection('keynotes', ({ data }) => !data.draft);
 >
 	<main class="wrap">
 		<section class="page-hero">
-			<div class="page-hero-head">
-				<HandDrawnAccent>Keynote speaker</HandDrawnAccent>
-			</div>
 			<h1>Keynotes</h1>
 			<p class="lede">
 				I keynote on the thinking behind the systems we build — critical thinking,
@@ -36,9 +32,6 @@ const keynotes = await getCollection('keynotes', ({ data }) => !data.draft);
 <style>
 	.page-hero {
 		padding: 76px 0 20px;
-	}
-	.page-hero-head {
-		margin-bottom: 22px;
 	}
 	h1 {
 		font-family: var(--serif);

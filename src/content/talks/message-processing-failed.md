@@ -9,8 +9,11 @@ topics:
   - Distributed systems
   - Debugging
 draft: false
+order: 7
 deliveries: []
 sessionizeUrl: "https://sessionize.com/s/noctovis/message-processing-failed-but-whats-the-root-cause/51975"
+photo: "../../assets/talk-banners/message-processing-failed.jpg"
+githubUrl: "https://github.com/lailabougria/talks/tree/main/message-processing-failed-but-whats-the-root-cause"
 ---
 
 How do you investigate failures in a distributed system? If your first thought is to look at the call stack, then good luck... In a distributed system, there is no such thing as a single call stack! Instead, it is scattered across multiple services that tackle a specific concern and communicate through a continuous stream of messages that flow through the system. That call stack becomes a haystack, so how do you find the proverbial needle?

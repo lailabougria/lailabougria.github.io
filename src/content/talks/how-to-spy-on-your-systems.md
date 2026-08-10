@@ -8,8 +8,11 @@ topics:
   - OpenTelemetry
   - Distributed systems
 draft: false
+order: 5
 deliveries: []
 sessionizeUrl: "https://sessionize.com/s/noctovis/how-to-effectively-spy-on-your-systems/61258"
+photo: "../../assets/talk-banners/how-to-spy-on-your-systems.jpg"
+githubUrl: "https://github.com/lailabougria/talks/tree/main/how-to-effectively-spy-on-your-systems"
 ---
 
 OpenTelemetry has quickly become the go-to industry standard for distributed tracing, logging, and metrics. Its widespread adoption across the industry, including the .NET ecosystem, has made it a breeze to use in your applications. But larger, more complex systems introduce challenges that require us to strengthen our understanding of observability, align on our observability goals, and better understand the full capabilities of the OpenTelemetry project.

@@ -1,4 +1,5 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import YouTubeEmbed from '../../components/YouTubeEmbed.astro';
 import { getCollection, render } from 'astro:content';
@@ -13,7 +14,7 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { title, categories, description, topics, deliveries, sessionizeUrl } = entry.data;
+const { title, categories, description, topics, deliveries, sessionizeUrl, photo, githubUrl } = entry.data;
 const { Content } = await render(entry);
 
 const sortedDeliveries = [...deliveries].sort((a, b) => b.date.valueOf() - a.date.valueOf());
@@ -45,6 +46,14 @@ const recordings = sortedDeliveries.filter((d) => d.youtubeId);
 		</article>
 
 		{
+			photo && (
+				<section class="section photo-section" style="border-top: none;">
+					<Image class="talk-photo" src={photo} alt={title} width={960} />
+				</section>
+			)
+		}
+
+		{
 			recordings.length > 0 && (
 				<section class="section" style="border-top: none;">
 					<div class="section-head">
@@ -68,35 +77,15 @@ const recordings = sortedDeliveries.filter((d) => d.youtubeId);
 			<Content />
 		</div>
 
-		<section class="section">
-			<div class="section-head">
-				<h2>Where it's been delivered</h2>
-			</div>
-			{
-				sortedDeliveries.length > 0 ? (
-					<div class="delivery-list">
-						{sortedDeliveries.map((d) => (
-							<div class="delivery-row">
-								<span class="delivery-event">
-									{d.event}, {d.location}
-								</span>
-								<span class="delivery-date">{formatDate(d.date)}</span>
-								{d.slidesUrl && (
-									<a class="delivery-link" href={d.slidesUrl} target="_blank" rel="noopener">
-										Slides
-									</a>
-								)}
-							</div>
-						))}
-					</div>
-				) : (
-					<p class="lede">Not yet delivered publicly — get in touch to book this talk.</p>
-				)
-			}
-		</section>
-
 		<section class="section cta-section" style="border-bottom: none;">
 			<a class="btn primary" href="/contact/">Invite me to speak</a>
+			{
+				githubUrl && (
+					<a class="btn ghost" href={githubUrl} target="_blank" rel="noopener">
+						Resources &amp; code on GitHub ↗
+					</a>
+				)
+			}
 			<a class="btn ghost" href="/talks/">← All talks</a>
 		</section>
 	</main>
@@ -134,6 +123,23 @@ const recordings = sortedDeliveries.filter((d) => d.youtubeId);
 		font-weight: 600;
 	}
 
+	.photo-section {
+		padding-top: 0;
+		padding-bottom: 24px;
+	}
+	.photo-section :global(.talk-photo) {
+		width: 100%;
+		max-width: 720px;
+		height: auto;
+		display: block;
+		border-radius: 3px;
+		border: 1px solid var(--line);
+	}
+	.photo-section + .section {
+		padding-top: 24px;
+		border-top: none;
+	}
+
 	.recordings {
 		display: grid;
 		gap: 28px;
@@ -153,39 +159,6 @@ const recordings = sortedDeliveries.filter((d) => d.youtubeId);
 	}
 	.prose :global(p) {
 		margin: 0 0 18px;
-	}
-
-	.delivery-list {
-		display: flex;
-		flex-direction: column;
-	}
-	.delivery-row {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 16px;
-		align-items: baseline;
-		padding: 14px 0;
-		border-top: 1px solid var(--line);
-		font-size: 14.5px;
-	}
-	.delivery-row:last-child {
-		border-bottom: 1px solid var(--line);
-	}
-	.delivery-event {
-		font-weight: 600;
-		flex: 1;
-		min-width: 200px;
-	}
-	.delivery-date {
-		font-family: var(--mono);
-		font-size: 12.5px;
-		color: var(--muted);
-	}
-	.delivery-link {
-		font-size: 13px;
-		color: var(--accent-2);
-		text-decoration: none;
-		font-weight: 600;
 	}
 
 	.cta-section {
