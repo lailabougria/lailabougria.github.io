@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	entry: CollectionEntry<'workshops'>;
+}
+const { entry } = Astro.props;
+const { title, tagline, durations, deliveries } = entry.data;
+
+const now = new Date();
+const nextUp = [...deliveries]
+	.filter((d) => d.date.valueOf() >= now.valueOf())
+	.sort((a, b) => a.date.valueOf() - b.date.valueOf())[0];
+---
+
+<a class="card" href={`/workshops/${entry.id}/`}>
+	<span class="badge">Workshop</span>
+	<h3>{title}</h3>
+	<p>{tagline}</p>
+	<div class="meta">
+		{
+			durations.length > 0 && (
+				<span>
+					Format: <b>{durations.join(' or ')}</b>
+				</span>
+			)
+		}
+		{
+			nextUp ? (
+				<span>
+					Next up: <b>{nextUp.event}, {nextUp.dateLabel}</b>
+				</span>
+			) : (
+				<span>Available for conferences &amp; in-house teams</span>
+			)
+		}
+	</div>
+	<span class="link">Read more →</span>
+</a>

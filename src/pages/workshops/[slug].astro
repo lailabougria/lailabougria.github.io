@@ -1,0 +1,312 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { flagEmoji } from '../../lib/flag';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+	const workshops = await getCollection('workshops', ({ data }) => !data.draft);
+	return workshops.map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+const { title, tagline, description, durations, audience, outcomes, prerequisites, deliveries, githubUrl } =
+	entry.data;
+const { Content } = await render(entry);
+
+const now = new Date();
+const upcoming = [...deliveries]
+	.filter((d) => d.date.valueOf() >= now.valueOf())
+	.sort((a, b) => a.date.valueOf() - b.date.valueOf());
+const past = [...deliveries]
+	.filter((d) => d.date.valueOf() < now.valueOf())
+	.sort((a, b) => b.date.valueOf() - a.date.valueOf());
+---
+
+<BaseLayout title={title} description={description}>
+	<main class="wrap">
+		<article class="page-hero">
+			<p class="eyebrow">Workshop</p>
+			<h1>{title}</h1>
+			<p class="lede">{tagline}</p>
+			{
+				durations.length > 0 && (
+					<div class="durations">
+						{durations.map((d) => (
+							<span class="tag">{d}</span>
+						))}
+					</div>
+				)
+			}
+		</article>
+
+		<div class="prose">
+			<Content />
+		</div>
+
+		{
+			outcomes.length > 0 && (
+				<section class="section outcomes-section">
+					<div class="section-head">
+						<h2>What you'll learn</h2>
+					</div>
+					<ul class="outcomes-list">
+						{outcomes.map((item) => (
+							<li>{item}</li>
+						))}
+					</ul>
+				</section>
+			)
+		}
+
+		<div class="detail-grid">
+			{
+				audience.length > 0 && (
+					<section class="detail-block">
+						<h2>Who this workshop is for</h2>
+						<ul>
+							{audience.map((item) => (
+								<li>{item}</li>
+							))}
+						</ul>
+					</section>
+				)
+			}
+
+			{
+				prerequisites.length > 0 && (
+					<section class="detail-block">
+						<h2>What to bring</h2>
+						<ul>
+							{prerequisites.map((item) => (
+								<li>{item}</li>
+							))}
+						</ul>
+					</section>
+				)
+			}
+		</div>
+
+		{
+			(upcoming.length > 0 || past.length > 0) && (
+				<section class="section">
+					<div class="section-head">
+						<h2>Where it's been delivered</h2>
+					</div>
+					{upcoming.length > 0 && (
+						<>
+							<p class="delivery-group-label">Upcoming</p>
+							<div class="delivery-list">
+								{upcoming.map((d) => (
+									<a class="delivery-row" href={d.eventUrl} target="_blank" rel="noopener">
+										<span class="delivery-flag" aria-hidden="true">
+											{d.countryCode ? flagEmoji(d.countryCode) : '📍'}
+										</span>
+										<span class="delivery-event">
+											{d.event}, {d.location}
+										</span>
+										<span class="delivery-date">{d.dateLabel}</span>
+										<span class="delivery-duration">{d.duration}</span>
+									</a>
+								))}
+							</div>
+						</>
+					)}
+					{past.length > 0 && (
+						<>
+							<p class="delivery-group-label">Past</p>
+							<div class="delivery-list">
+								{past.map((d) => (
+									<a class="delivery-row" href={d.eventUrl} target="_blank" rel="noopener">
+										<span class="delivery-flag" aria-hidden="true">
+											{d.countryCode ? flagEmoji(d.countryCode) : '📍'}
+										</span>
+										<span class="delivery-event">
+											{d.event}, {d.location}
+										</span>
+										<span class="delivery-date">{d.dateLabel}</span>
+										<span class="delivery-duration">{d.duration}</span>
+									</a>
+								))}
+							</div>
+						</>
+					)}
+				</section>
+			)
+		}
+
+		<section class="section cta-section" style="border-bottom: none;">
+			<a class="btn primary" href="/contact/">Book this workshop</a>
+			{
+				githubUrl && (
+					<a class="btn ghost" href={githubUrl} target="_blank" rel="noopener">
+						Resources on GitHub ↗
+					</a>
+				)
+			}
+			<a class="btn ghost" href="/workshops/">← All workshops</a>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	.page-hero {
+		padding: 76px 0 32px;
+	}
+	h1 {
+		font-family: var(--serif);
+		font-weight: 500;
+		font-size: clamp(30px, 4.4vw, 42px);
+		margin: 0 0 18px;
+	}
+	.lede {
+		display: block;
+		font-size: 17px;
+		color: var(--muted);
+		max-width: 62ch;
+		margin: 0 0 20px;
+	}
+	.durations {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+	.durations .tag {
+		color: var(--accent);
+	}
+
+	.prose {
+		max-width: 68ch;
+		font-size: 16.5px;
+		color: var(--ink);
+	}
+	.prose :global(p) {
+		margin: 0 0 18px;
+	}
+	.prose :global(p:last-child) {
+		margin-bottom: 0;
+	}
+
+	.outcomes-list {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 14px 40px;
+	}
+	.outcomes-list li {
+		font-size: 15.5px;
+		color: var(--ink);
+		padding-left: 20px;
+		position: relative;
+	}
+	.outcomes-list li::before {
+		content: '✓';
+		position: absolute;
+		left: 0;
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	.detail-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 40px;
+		padding: 40px 0;
+		border-bottom: 1px solid var(--line);
+	}
+	.detail-block h2 {
+		font-family: var(--serif);
+		font-size: 19px;
+		font-weight: 500;
+		font-style: italic;
+		margin: 0 0 16px;
+	}
+	.detail-block ul {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+	}
+	.detail-block li {
+		font-size: 14.5px;
+		color: var(--muted);
+		padding-left: 18px;
+		position: relative;
+	}
+	.detail-block li::before {
+		content: '—';
+		position: absolute;
+		left: 0;
+		color: var(--accent-2);
+	}
+
+	.delivery-group-label {
+		font-family: var(--mono);
+		font-size: 11px;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--accent-2);
+		margin: 24px 0 8px;
+	}
+	.delivery-group-label:first-of-type {
+		margin-top: 0;
+	}
+	.delivery-list {
+		display: flex;
+		flex-direction: column;
+	}
+	.delivery-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 16px;
+		padding: 14px 4px;
+		border-top: 1px solid var(--line);
+		font-size: 14.5px;
+		text-decoration: none;
+		color: inherit;
+	}
+	.delivery-row:last-child {
+		border-bottom: 1px solid var(--line);
+	}
+	.delivery-row:hover {
+		background: var(--surface);
+	}
+	.delivery-flag {
+		font-size: 18px;
+		line-height: 1;
+	}
+	.delivery-event {
+		font-weight: 600;
+		flex: 1;
+		min-width: 200px;
+	}
+	.delivery-date,
+	.delivery-duration {
+		font-family: var(--mono);
+		font-size: 12.5px;
+		color: var(--muted);
+	}
+
+	.cta-section {
+		display: flex;
+		gap: 16px;
+		flex-wrap: wrap;
+	}
+
+	@media (max-width: 760px) {
+		.detail-grid {
+			grid-template-columns: 1fr;
+			gap: 32px;
+		}
+		.outcomes-list {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
