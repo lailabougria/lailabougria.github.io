@@ -195,8 +195,25 @@ p {
 }
 
 @media (max-width: 760px) {
-	.site-nav .navlinks {
+	.site-nav .wrap {
+		flex-wrap: wrap;
+		height: auto;
+		padding-top: 14px;
+		padding-bottom: 14px;
+		row-gap: 10px;
+	}
+	.site-nav .logo {
+		font-size: 26px;
+	}
+	.site-nav .li-btn {
 		display: none;
+	}
+	.site-nav .navlinks {
+		display: flex;
+		flex-basis: 100%;
+		flex-wrap: wrap;
+		gap: 8px 16px;
+		font-size: 13px;
 	}
 }
 
