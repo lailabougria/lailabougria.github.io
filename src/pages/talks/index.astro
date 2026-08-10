@@ -1,0 +1,113 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { talkCategories } from '../../content.config';
+
+const talks = await getCollection('talks', ({ data }) => !data.draft);
+---
+
+<BaseLayout
+	title="Talks"
+	description="Conference talks by Laila Bougria on event-driven architecture, observability, patterns, critical thinking, and more."
+>
+	<main class="wrap">
+		<section class="page-hero">
+			<h1>Talks</h1>
+			<p class="lede">
+				Sessions spanning event-driven architecture, observability, and the patterns behind
+				them, alongside talks on critical thinking and starting a career in software.
+			</p>
+			<div class="filters" role="group" aria-label="Filter talks by category">
+				<button type="button" class="filter-btn is-active" data-filter="all">All</button>
+				{
+					talkCategories.map((category) => (
+						<button type="button" class="filter-btn" data-filter={category}>
+							{category}
+						</button>
+					))
+				}
+			</div>
+		</section>
+
+		<section class="section" style="border-top: none;">
+			<div class="talk-list" id="talk-list">
+				{
+					talks.map((entry) => (
+						<a
+							class="talk-row"
+							href={`/talks/${entry.id}/`}
+							data-categories={entry.data.categories.join(',')}
+						>
+							<span class="title">{entry.data.title}</span>
+							<span class="tags">
+								{entry.data.categories.map((category) => (
+									<span class="tag">{category}</span>
+								))}
+							</span>
+						</a>
+					))
+				}
+			</div>
+		</section>
+	</main>
+</BaseLayout>
+
+<script>
+	const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+	const rows = document.querySelectorAll<HTMLAnchorElement>('#talk-list .talk-row');
+
+	buttons.forEach((button) => {
+		button.addEventListener('click', () => {
+			buttons.forEach((b) => b.classList.remove('is-active'));
+			button.classList.add('is-active');
+
+			const filter = button.dataset.filter;
+			rows.forEach((row) => {
+				const categories = row.dataset.categories?.split(',') ?? [];
+				const show = filter === 'all' || categories.includes(filter ?? '');
+				row.style.display = show ? '' : 'none';
+			});
+		});
+	});
+</script>
+
+<style>
+	.page-hero {
+		padding: 76px 0 32px;
+	}
+	h1 {
+		font-family: var(--serif);
+		font-weight: 500;
+		font-size: clamp(34px, 5vw, 48px);
+		margin: 0 0 20px;
+	}
+	.lede {
+		display: block;
+		font-size: 17px;
+		color: var(--muted);
+		max-width: 62ch;
+		margin: 0 0 30px;
+	}
+	.filters {
+		display: flex;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+	.filter-btn {
+		font-family: var(--mono);
+		font-size: 12.5px;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--muted);
+		background: transparent;
+		border: 1px solid var(--line);
+		border-radius: 3px;
+		padding: 9px 16px;
+		cursor: pointer;
+	}
+	.filter-btn.is-active {
+		color: var(--accent-ink);
+		background: var(--accent);
+		border-color: var(--accent);
+	}
+</style>

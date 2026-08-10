@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import KeynoteCard from '../components/KeynoteCard.astro';
+import TalkCard from '../components/TalkCard.astro';
+import UpcomingList from '../components/UpcomingList.astro';
+import { getCollection } from 'astro:content';
+import { getAllDeliveries, upcoming } from '../lib/schedule';
+
+const keynotes = await getCollection('keynotes', ({ data }) => !data.draft);
+const talks = await getCollection('talks', ({ data }) => !data.draft);
+const featuredTalks = talks.slice(0, 4);
+
+const deliveries = await getAllDeliveries();
+const upcomingItems = upcoming(deliveries);
+---
+
+<BaseLayout title="Laila Bougria">
+	<main class="wrap">
+		<section class="hero">
+			<p class="eyebrow">Keynote speaker &amp; Solutions Architect</p>
+			<h1>
+				Distributed systems are hard to explain. I make it look <em>easy</em> on stage.
+			</h1>
+			<p class="lede">
+				Solutions Architect at Particular Software and Microsoft MVP, with two decades in
+				event-driven and message-based architecture. Keynotes on critical thinking and
+				debugging; sessions on the messaging and architecture problems most teams hit
+				eventually.
+			</p>
+			<div class="cta-row">
+				<a class="btn primary" href="/contact/">Book a keynote</a>
+				<a class="btn ghost" href="/talks/">Browse talks</a>
+			</div>
+		</section>
+
+		<section class="section upcoming-section" style="border-top: none;">
+			<div class="section-head">
+				<h2>Where I'll be</h2>
+				<a class="tag" href="https://sessionize.com/noctovis" target="_blank" rel="noopener">
+					full schedule on Sessionize ↗
+				</a>
+			</div>
+			<UpcomingList items={upcomingItems} />
+		</section>
+
+		<section class="section">
+			<div class="section-head">
+				<h2>Featured keynotes</h2>
+				<span class="tag">/keynotes</span>
+			</div>
+			<div class="card-grid">
+				{keynotes.map((entry) => <KeynoteCard entry={entry} />)}
+			</div>
+		</section>
+
+		<section class="section" style="border-bottom: none;">
+			<div class="section-head">
+				<h2>Recent talks</h2>
+				<span class="tag">/talks</span>
+			</div>
+			<div class="talk-list">
+				{featuredTalks.map((entry) => <TalkCard entry={entry} />)}
+			</div>
+			<p style="margin-top: 24px;">
+				<a class="btn ghost" href="/talks/">See all talks →</a>
+			</p>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	.hero {
+		padding: 104px 0 76px;
+	}
+	h1 {
+		font-family: var(--serif);
+		font-weight: 500;
+		font-size: clamp(38px, 5.6vw, 60px);
+		letter-spacing: -0.01em;
+		margin: 0 0 26px;
+		line-height: 1.12;
+	}
+	h1 em {
+		font-style: italic;
+		color: var(--accent);
+	}
+	.lede {
+		display: block;
+		font-size: 17.5px;
+		color: var(--muted);
+		max-width: 56ch;
+		margin: 0 0 34px;
+	}
+	.cta-row {
+		display: flex;
+		gap: 16px;
+		flex-wrap: wrap;
+	}
+
+	.upcoming-section .section-head .tag {
+		text-decoration: none;
+	}
+</style>

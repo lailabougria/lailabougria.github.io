@@ -1,0 +1,196 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import YouTubeEmbed from '../../components/YouTubeEmbed.astro';
+import { getCollection, render } from 'astro:content';
+import { formatDate } from '../../lib/schedule';
+
+export async function getStaticPaths() {
+	const talks = await getCollection('talks', ({ data }) => !data.draft);
+	return talks.map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+const { title, categories, description, topics, deliveries, sessionizeUrl } = entry.data;
+const { Content } = await render(entry);
+
+const sortedDeliveries = [...deliveries].sort((a, b) => b.date.valueOf() - a.date.valueOf());
+const recordings = sortedDeliveries.filter((d) => d.youtubeId);
+---
+
+<BaseLayout title={title} description={description}>
+	<main class="wrap">
+		<article class="page-hero">
+			<p class="eyebrow">{categories.join(' · ')}</p>
+			<h1>{title}</h1>
+			<p class="lede">{description}</p>
+			{
+				topics.length > 0 && (
+					<div class="topics">
+						{topics.map((topic) => (
+							<span class="tag">{topic}</span>
+						))}
+					</div>
+				)
+			}
+			{
+				sessionizeUrl && (
+					<a class="sessionize-link" href={sessionizeUrl} target="_blank" rel="noopener">
+						View on Sessionize →
+					</a>
+				)
+			}
+		</article>
+
+		{
+			recordings.length > 0 && (
+				<section class="section" style="border-top: none;">
+					<div class="section-head">
+						<h2>Watch</h2>
+					</div>
+					<div class="recordings">
+						{recordings.map((r) => (
+							<div>
+								<YouTubeEmbed youtubeId={r.youtubeId!} title={`${title} — ${r.event}`} />
+								<p class="recording-caption">
+									{r.event}, {r.location} · {formatDate(r.date)}
+								</p>
+							</div>
+						))}
+					</div>
+				</section>
+			)
+		}
+
+		<div class="prose">
+			<Content />
+		</div>
+
+		<section class="section">
+			<div class="section-head">
+				<h2>Where it's been delivered</h2>
+			</div>
+			{
+				sortedDeliveries.length > 0 ? (
+					<div class="delivery-list">
+						{sortedDeliveries.map((d) => (
+							<div class="delivery-row">
+								<span class="delivery-event">
+									{d.event}, {d.location}
+								</span>
+								<span class="delivery-date">{formatDate(d.date)}</span>
+								{d.slidesUrl && (
+									<a class="delivery-link" href={d.slidesUrl} target="_blank" rel="noopener">
+										Slides
+									</a>
+								)}
+							</div>
+						))}
+					</div>
+				) : (
+					<p class="lede">Not yet delivered publicly — get in touch to book this talk.</p>
+				)
+			}
+		</section>
+
+		<section class="section cta-section" style="border-bottom: none;">
+			<a class="btn primary" href="/contact/">Invite me to speak</a>
+			<a class="btn ghost" href="/talks/">← All talks</a>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	.page-hero {
+		padding: 76px 0 40px;
+	}
+	h1 {
+		font-family: var(--serif);
+		font-weight: 500;
+		font-size: clamp(30px, 4.4vw, 42px);
+		margin: 0 0 18px;
+	}
+	.lede {
+		display: block;
+		font-size: 17px;
+		color: var(--muted);
+		max-width: 62ch;
+		margin: 0 0 20px;
+	}
+	.topics {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+		margin-bottom: 18px;
+	}
+	.sessionize-link {
+		display: inline-block;
+		font-family: var(--mono);
+		font-size: 12.5px;
+		color: var(--accent-2);
+		text-decoration: none;
+		font-weight: 600;
+	}
+
+	.recordings {
+		display: grid;
+		gap: 28px;
+		grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+	}
+	.recording-caption {
+		font-family: var(--mono);
+		font-size: 12px;
+		color: var(--muted);
+		margin-top: 10px;
+	}
+
+	.prose {
+		max-width: 68ch;
+		font-size: 16.5px;
+		color: var(--ink);
+	}
+	.prose :global(p) {
+		margin: 0 0 18px;
+	}
+
+	.delivery-list {
+		display: flex;
+		flex-direction: column;
+	}
+	.delivery-row {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 16px;
+		align-items: baseline;
+		padding: 14px 0;
+		border-top: 1px solid var(--line);
+		font-size: 14.5px;
+	}
+	.delivery-row:last-child {
+		border-bottom: 1px solid var(--line);
+	}
+	.delivery-event {
+		font-weight: 600;
+		flex: 1;
+		min-width: 200px;
+	}
+	.delivery-date {
+		font-family: var(--mono);
+		font-size: 12.5px;
+		color: var(--muted);
+	}
+	.delivery-link {
+		font-size: 13px;
+		color: var(--accent-2);
+		text-decoration: none;
+		font-weight: 600;
+	}
+
+	.cta-section {
+		display: flex;
+		gap: 16px;
+		flex-wrap: wrap;
+	}
+</style>

@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import HandDrawnAccent from '../../components/HandDrawnAccent.astro';
+import KeynoteCard from '../../components/KeynoteCard.astro';
+import { getCollection } from 'astro:content';
+
+const keynotes = await getCollection('keynotes', ({ data }) => !data.draft);
+---
+
+<BaseLayout
+	title="Keynotes"
+	description="Keynote talks by Laila Bougria on critical thinking, debugging, and building systems with restraint."
+>
+	<main class="wrap">
+		<section class="page-hero">
+			<div class="page-hero-head">
+				<HandDrawnAccent>Keynote speaker</HandDrawnAccent>
+			</div>
+			<h1>Keynotes</h1>
+			<p class="lede">
+				I keynote on the thinking behind the systems we build — critical thinking,
+				debugging, and the discipline of restraint — for developer and business audiences
+				alike. Each keynote below includes where it's been delivered and my thinking on
+				the topic.
+			</p>
+		</section>
+
+		<section class="section" style="border-top: none;">
+			<div class="card-grid">
+				{keynotes.map((entry) => <KeynoteCard entry={entry} />)}
+			</div>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	.page-hero {
+		padding: 76px 0 20px;
+	}
+	.page-hero-head {
+		margin-bottom: 22px;
+	}
+	h1 {
+		font-family: var(--serif);
+		font-weight: 500;
+		font-size: clamp(34px, 5vw, 48px);
+		margin: 0 0 20px;
+	}
+	.lede {
+		display: block;
+		font-size: 17px;
+		color: var(--muted);
+		max-width: 62ch;
+	}
+</style>

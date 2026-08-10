@@ -1,0 +1,16 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	entry: CollectionEntry<'talks'>;
+}
+const { entry } = Astro.props;
+const { title, categories } = entry.data;
+---
+
+<a class="talk-row" href={`/talks/${entry.id}/`}>
+	<span class="title">{title}</span>
+	<span class="tags">
+		{categories.map((category) => <span class="tag">{category}</span>)}
+	</span>
+</a>

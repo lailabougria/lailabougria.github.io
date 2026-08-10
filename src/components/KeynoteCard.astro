@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	entry: CollectionEntry<'keynotes'>;
+}
+const { entry } = Astro.props;
+const { title, tagline, deliveries } = entry.data;
+
+const mostRecent = [...deliveries].sort((a, b) => b.date.valueOf() - a.date.valueOf())[0];
+---
+
+<a class="card" href={`/keynotes/${entry.id}/`}>
+	<span class="badge">Keynote</span>
+	<h3>{title}</h3>
+	<p>{tagline}</p>
+	<div class="meta">
+		{
+			mostRecent ? (
+				<>
+					<span>
+						Venue: <b>{mostRecent.event}, {mostRecent.location}</b>
+					</span>
+					{mostRecent.attendees && (
+						<span>
+							Attendees: <b>{mostRecent.attendees}+</b>
+						</span>
+					)}
+				</>
+			) : (
+				<span>Available to book</span>
+			)
+		}
+	</div>
+	<span class="link">Read more →</span>
+</a>

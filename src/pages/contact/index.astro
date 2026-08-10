@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { linkedin, socials } from '../../data/social';
+
+// TODO: sign up at https://formspree.io, create a form, and replace
+// YOUR_FORM_ID below with the ID from your form's endpoint URL.
+const FORMSPREE_ID = 'YOUR_FORM_ID';
+---
+
+<BaseLayout
+	title="Contact"
+	description="Get in touch to book Laila Bougria for a keynote or conference talk."
+>
+	<main class="wrap">
+		<section class="page-hero">
+			<h1>Let's talk about your event</h1>
+			<p class="lede">
+				Booking a keynote, inviting me for a conference talk, or just want a quote? Tell me
+				about your event below, or reach out directly on
+				<a class="inline-link" href={linkedin.url} target="_blank" rel="noopener">LinkedIn</a>.
+			</p>
+		</section>
+
+		<section class="section" style="border-top: none;">
+			<form class="contact-form" action={`https://formspree.io/f/${FORMSPREE_ID}`} method="POST">
+				<input type="hidden" name="_subject" value="New speaking inquiry from lailabougria.github.io" />
+				<input type="text" name="_gotcha" style="display:none" tabindex="-1" autocomplete="off" />
+
+				<div class="form-field">
+					<label for="name">Name</label>
+					<input type="text" id="name" name="name" required />
+				</div>
+
+				<div class="form-field">
+					<label for="email">Email</label>
+					<input type="email" id="email" name="email" required />
+				</div>
+
+				<div class="form-field">
+					<label for="organization">Organization / event</label>
+					<input type="text" id="organization" name="organization" />
+				</div>
+
+				<div class="form-field">
+					<label for="engagement">What are you looking for?</label>
+					<select id="engagement" name="engagement">
+						<option value="keynote">A keynote</option>
+						<option value="talk">A conference talk</option>
+						<option value="quote">A quote / more information</option>
+						<option value="other">Something else</option>
+					</select>
+				</div>
+
+				<div class="form-field">
+					<label for="event-date">Event date (if known)</label>
+					<input type="date" id="event-date" name="event_date" />
+				</div>
+
+				<div class="form-field">
+					<label for="message">Message</label>
+					<textarea id="message" name="message" required></textarea>
+				</div>
+
+				<button type="submit" class="btn primary">Send</button>
+			</form>
+		</section>
+
+		<section class="section" style="border-bottom: none;">
+			<div class="section-head">
+				<h2>Elsewhere</h2>
+			</div>
+			<div class="social-list">
+				<a href={linkedin.url} target="_blank" rel="noopener">LinkedIn — /in/lailabougria</a>
+				{
+					socials.map((s) => (
+						<a href={s.url} target="_blank" rel="noopener">
+							{s.name}
+						</a>
+					))
+				}
+			</div>
+		</section>
+	</main>
+</BaseLayout>
+
+<style>
+	.page-hero {
+		padding: 76px 0 30px;
+	}
+	h1 {
+		font-family: var(--serif);
+		font-weight: 500;
+		font-size: clamp(34px, 5vw, 48px);
+		margin: 0 0 20px;
+	}
+	.lede {
+		display: block;
+		font-size: 17px;
+		color: var(--muted);
+		max-width: 62ch;
+	}
+	.inline-link {
+		color: var(--accent-2);
+		font-weight: 600;
+	}
+
+	.contact-form {
+		display: flex;
+		flex-direction: column;
+		gap: 22px;
+		max-width: 520px;
+	}
+	.contact-form .btn {
+		align-self: flex-start;
+	}
+
+	.social-list {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		font-size: 15px;
+	}
+	.social-list a {
+		text-decoration: none;
+		color: var(--muted);
+	}
+	.social-list a:hover {
+		color: var(--ink);
+	}
+</style>

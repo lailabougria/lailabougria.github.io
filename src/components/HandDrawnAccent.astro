@@ -1,0 +1,19 @@
+---
+// A single hand-sketched circle accent, wrapping whatever text is in the slot.
+// Use sparingly — once per page, on the thing that matters most (e.g. "Keynote speaker").
+const id = `rough-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+<span class="hand-circle">
+	<svg viewBox="0 0 200 40" preserveAspectRatio="none" aria-hidden="true">
+		<filter id={id} x="-30%" y="-30%" width="160%" height="160%">
+			<feTurbulence type="fractalNoise" baseFrequency="0.03 0.09" numOctaves="2" seed="9" result="n"></feTurbulence>
+			<feDisplacementMap in="SourceGraphic" in2="n" scale="5"></feDisplacementMap>
+		</filter>
+		<path
+			filter={`url(#${id})`}
+			d="M6,20 C6,6 40,2 100,2 C160,2 194,6 194,20 C194,34 160,38 100,38 C40,38 6,34 6,20 Z"
+		></path>
+	</svg>
+	<span class="label"><slot /></span>
+</span>

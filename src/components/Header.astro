@@ -1,0 +1,31 @@
+---
+import LinkedInIcon from './LinkedInIcon.astro';
+import { linkedin } from '../data/social';
+
+const navItems = [
+	{ href: '/keynotes/', label: 'Keynotes' },
+	{ href: '/talks/', label: 'Talks' },
+	{ href: '/contact/', label: 'Contact' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="site-nav">
+	<div class="wrap">
+		<a class="logo" href="/">Laila Bougria</a>
+		<div class="navlinks">
+			{
+				navItems.map((item) => (
+					<a href={item.href} aria-current={currentPath.startsWith(item.href) ? 'page' : undefined}>
+						{item.label}
+					</a>
+				))
+			}
+		</div>
+		<a class="li-btn" href={linkedin.url} target="_blank" rel="noopener">
+			<LinkedInIcon />
+			LinkedIn
+		</a>
+	</div>
+</nav>

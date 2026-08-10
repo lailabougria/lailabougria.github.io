@@ -1,0 +1,28 @@
+---
+import LinkedInIcon from './LinkedInIcon.astro';
+import { linkedin, socials } from '../data/social';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+	<div class="wrap">
+		<div class="footer-grid">
+			<div class="social-list">
+				<a href={linkedin.url} target="_blank" rel="noopener">LinkedIn — /in/lailabougria</a>
+				{
+					socials.map((s) => (
+						<a href={s.url} target="_blank" rel="noopener">
+							{s.name}
+						</a>
+					))
+				}
+			</div>
+			<a class="li-btn" href={linkedin.url} target="_blank" rel="noopener">
+				<LinkedInIcon />
+				Connect on LinkedIn
+			</a>
+		</div>
+		<p class="copy">© {year} Laila Bougria</p>
+	</div>
+</footer>
